@@ -7,9 +7,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import mx.itson.business.popocamiones.EstadoAsientosForm;
-import mx.itson.business.popocamiones.RegistrarAutobusForm;
 import mx.itson.business.popocamiones.ReporteBoletosForm;
-import mx.itson.business.popocamiones.VenderBoletoForm;
+import mx.itson.business.popocamiones.ComprarBoletoForm;
 import mx.itson.entidades.popocamiones.Autobus;
 
 public class PantallaPrincipal extends JFrame {
@@ -24,24 +23,21 @@ public class PantallaPrincipal extends JFrame {
         setLayout(new GridLayout(5, 1, 10, 10)); // Diseño con botones verticales
 
         // Crear autobús
-        autobus = new Autobus("ABC123");
+        autobus = new Autobus();
 
         // Botones principales
-        JButton btnRegistrarAutobus = new JButton("Registrar Autobús");
-        JButton btnVenderBoleto = new JButton("Vender Boleto");
+        JButton btnVenderBoleto = new JButton("Comprar Boleto");
         JButton btnMostrarAsientos = new JButton("Mostrar Asientos");
         JButton btnGenerarReporte = new JButton("Generar Reporte");
         JButton btnSalir = new JButton("Salir");
 
         // Agregar acciones a los botones
-        btnRegistrarAutobus.addActionListener((ActionEvent e) -> abrirRegistrarAutobus());
         btnVenderBoleto.addActionListener((ActionEvent e) -> abrirVenderBoleto());
         btnMostrarAsientos.addActionListener((ActionEvent e) -> abrirMostrarAsientos());
         btnGenerarReporte.addActionListener((ActionEvent e) -> abrirGenerarReporte());
         btnSalir.addActionListener((ActionEvent e) -> System.exit(0));
 
         // Agregar botones al Frame
-        add(btnRegistrarAutobus);
         add(btnVenderBoleto);
         add(btnMostrarAsientos);
         add(btnGenerarReporte);
@@ -49,12 +45,8 @@ public class PantallaPrincipal extends JFrame {
     }
 
     // Métodos para abrir otras ventanas
-    private void abrirRegistrarAutobus() {
-        new RegistrarAutobusForm(this, autobus).setVisible(true);
-    }
-
     private void abrirVenderBoleto() {
-        new VenderBoletoForm(this, autobus).setVisible(true);
+        new ComprarBoletoForm(this, autobus).setVisible(true);
     }
 
     private void abrirMostrarAsientos() {

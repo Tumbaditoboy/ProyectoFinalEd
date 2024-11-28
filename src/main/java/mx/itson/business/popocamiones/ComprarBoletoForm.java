@@ -4,18 +4,19 @@
  */
 package mx.itson.business.popocamiones;
 import javax.swing.*;
+import java.util.List;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import mx.itson.entidades.popocamiones.Autobus;
 
-public class VenderBoletoForm extends JDialog {
+public class ComprarBoletoForm extends JDialog {
     private JComboBox<String> cmbAsientos;
     private JTextField txtNombre;
-    private JTextField txtDestino;
+    private JComboBox<String> cmbDestino;
     private JTextField txtPrecio;
 
-    public VenderBoletoForm(JFrame parent, Autobus autobus) {
-        super(parent, "Vender Boleto", true);
+    public ComprarBoletoForm(JFrame parent, Autobus autobus) {
+        super(parent, "Comprar Boleto", true);
         setSize(400, 300);
         setLocationRelativeTo(parent);
         setLayout(new GridLayout(5, 2));
@@ -27,21 +28,22 @@ public class VenderBoletoForm extends JDialog {
         JLabel lblNombre = new JLabel("Nombre:");
         txtNombre = new JTextField(10);
 
-        JLabel lblDestino = new JLabel("Destino:");
-        txtDestino = new JTextField(10);
+        JLabel lblDestino = new JLabel("Destino:");       
+        cmbDestino = new JComboBox<>();
+        cargarTerminales(autobus);
 
         JLabel lblPrecio = new JLabel("Precio:");
         txtPrecio = new JTextField(10);
 
-        JButton btnVender = new JButton("Vender Boleto");
+        JButton btnVender = new JButton("Comprar Boleto");
         btnVender.addActionListener((ActionEvent e) -> {
             String nombre = txtNombre.getText().trim();
-            String destino = txtDestino.getText().trim();
+            String destino = String.valueOf(cmbDestino.getSelectedItem());
             double precio = Double.parseDouble(txtPrecio.getText().trim());
             int asiento = Integer.parseInt(cmbAsientos.getSelectedItem().toString());
 
             if (autobus.venderBoleto(asiento, nombre, destino, precio)) {
-                JOptionPane.showMessageDialog(this, "Boleto vendido exitosamente.");
+                JOptionPane.showMessageDialog(this, "Boleto comprado exitosamente.");
             } else {
                 JOptionPane.showMessageDialog(this, "Asiento no disponible.");
             }
@@ -50,7 +52,7 @@ public class VenderBoletoForm extends JDialog {
         add(lblNombre);
         add(txtNombre);
         add(lblDestino);
-        add(txtDestino);
+        add(cmbDestino);
         add(lblPrecio);
         add(txtPrecio);
         add(new JLabel("Asiento:"));
@@ -63,6 +65,12 @@ public class VenderBoletoForm extends JDialog {
             if (!autobus.getAsientos()[i - 1]) {
                 cmbAsientos.addItem(String.valueOf(i));
             }
+        }
+    }
+    private void cargarTerminales(Autobus autobus){
+        List<String> terminales = autobus.getTerminales();
+        for (String t : terminales){
+            cmbDestino.addItem(t);
         }
     }
 }

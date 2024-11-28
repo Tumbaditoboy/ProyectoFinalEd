@@ -8,13 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Autobus {
-    private String placa;
     private List<String> terminales;
     private boolean[] asientos; // true si está ocupado, false si está disponible
     private List<Pasajero> pasajeros;
 
-    public Autobus(String placa) {
-        this.placa = placa;
+    public Autobus() {
         this.terminales = new ArrayList<>();
         this.asientos = new boolean[20]; // 20 asientos (0-19)
         this.pasajeros = new ArrayList<>();
@@ -31,9 +29,6 @@ public class Autobus {
         terminales.add("Nogales");
     }
 
-    public String getPlaca() {
-        return placa;
-    }
 
     public List<String> getTerminales() {
         return terminales;
@@ -93,11 +88,6 @@ public class Autobus {
 
         // Eliminar los pasajeros que se bajan
         pasajeros.removeIf(p -> p.getDestino().equalsIgnoreCase(terminal));
-    }
-
-    public void registrarAutobus(String placa, int totalAsientos) {
-        this.placa = placa;
-        this.asientos = new boolean[totalAsientos]; // Cambiar tamaño de asientos si es necesario
     }
 }
 
