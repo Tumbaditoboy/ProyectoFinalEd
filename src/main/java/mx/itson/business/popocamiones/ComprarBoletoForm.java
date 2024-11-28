@@ -18,7 +18,7 @@ public class ComprarBoletoForm extends JDialog {
     private JLabel lblPrecioValor;
 
     public ComprarBoletoForm(JFrame parent, Autobus autobus) {
-        super(parent, "Vender Boleto", true);
+        super(parent, "Comprar Boleto", true);
         setSize(400, 300);
         setLocationRelativeTo(parent);
         setLayout(new GridLayout(6, 2));
