@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import mx.itson.business.popocamiones.EstadoAsientosForm;
 import mx.itson.business.popocamiones.ReporteBoletosForm;
 import mx.itson.business.popocamiones.ComprarBoletoForm;
+import mx.itson.business.popocamiones.MoverTerminalForm;
 import mx.itson.entidades.popocamiones.Autobus;
 
 public class PantallaPrincipal extends JFrame {
@@ -29,18 +30,21 @@ public class PantallaPrincipal extends JFrame {
         JButton btnVenderBoleto = new JButton("Comprar Boleto");
         JButton btnMostrarAsientos = new JButton("Mostrar Asientos");
         JButton btnGenerarReporte = new JButton("Generar Reporte");
+        JButton btnMoverTerminal = new JButton("Mover Terminal"); 
         JButton btnSalir = new JButton("Salir");
 
         // Agregar acciones a los botones
         btnVenderBoleto.addActionListener((ActionEvent e) -> abrirVenderBoleto());
         btnMostrarAsientos.addActionListener((ActionEvent e) -> abrirMostrarAsientos());
         btnGenerarReporte.addActionListener((ActionEvent e) -> abrirGenerarReporte());
+        btnMoverTerminal.addActionListener((ActionEvent e) -> abrirMoverTerminal());
         btnSalir.addActionListener((ActionEvent e) -> System.exit(0));
 
         // Agregar botones al Frame
         add(btnVenderBoleto);
         add(btnMostrarAsientos);
         add(btnGenerarReporte);
+        add(btnMoverTerminal);
         add(btnSalir);
     }
 
@@ -61,6 +65,10 @@ public class PantallaPrincipal extends JFrame {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> new PantallaPrincipal().setVisible(true));
     }
+    
+    private void abrirMoverTerminal() {
+    new MoverTerminalForm(this, autobus).setVisible(true);
+}
 }
 
 

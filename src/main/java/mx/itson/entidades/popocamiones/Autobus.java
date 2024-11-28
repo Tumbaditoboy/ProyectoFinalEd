@@ -82,12 +82,14 @@ public class Autobus {
     }
 
     public void bajarPasajerosEnTerminal(String terminal) {
-        // Imprimir cuantos pasajeros se bajan en cada terminal
-        long count = pasajeros.stream().filter(p -> p.getDestino().equalsIgnoreCase(terminal)).count();
-        System.out.println("En la terminal de " + terminal + ", se bajan " + count + " pasajeros.");
+    // Liberar los asientos ocupados por los pasajeros que se bajan
+    pasajeros.stream()
+            .filter(p -> p.getDestino().equalsIgnoreCase(terminal))
+            .forEach(p -> asientos[p.getAsiento() - 1] = false); // Liberar asiento
 
-        // Eliminar los pasajeros que se bajan
-        pasajeros.removeIf(p -> p.getDestino().equalsIgnoreCase(terminal));
-    }
+    // Eliminar los pasajeros que se bajan
+    pasajeros.removeIf(p -> p.getDestino().equalsIgnoreCase(terminal));
+}
+
 }
 
