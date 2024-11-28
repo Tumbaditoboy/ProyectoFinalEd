@@ -7,56 +7,76 @@ import javax.swing.*;
 import java.util.List;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import mx.itson.entidades.popocamiones.Autobus;
 
 public class ComprarBoletoForm extends JDialog {
     private JComboBox<String> cmbAsientos;
     private JTextField txtNombre;
     private JComboBox<String> cmbDestino;
-    private JTextField txtPrecio;
+    private JLabel lblPrecioValor;
 
     public ComprarBoletoForm(JFrame parent, Autobus autobus) {
-        super(parent, "Comprar Boleto", true);
+        super(parent, "Vender Boleto", true);
         setSize(400, 300);
         setLocationRelativeTo(parent);
-        setLayout(new GridLayout(5, 2));
+        setLayout(new GridLayout(6, 2));
 
-        // Combobox para seleccionar el asiento
-        cmbAsientos = new JComboBox<>();
-        cargarAsientosDisponibles(autobus);
-
+        // Campo para el nombre
         JLabel lblNombre = new JLabel("Nombre:");
         txtNombre = new JTextField(10);
 
-        JLabel lblDestino = new JLabel("Destino:");       
+        // ComboBox para seleccionar destino
+        JLabel lblDestino = new JLabel("Destino:");
         cmbDestino = new JComboBox<>();
         cargarTerminales(autobus);
 
+        // Etiqueta para mostrar el precio
         JLabel lblPrecio = new JLabel("Precio:");
-        txtPrecio = new JTextField(10);
+        lblPrecioValor = new JLabel("0"); // Valor inicial del precio
 
+        // Actualizar precio al cambiar destino
+        cmbDestino.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    actualizarPrecio();
+                }
+            }
+        });
+
+        // ComboBox para seleccionar asiento
+        JLabel lblAsiento = new JLabel("Asiento:");
+        cmbAsientos = new JComboBox<>();
+        cargarAsientosDisponibles(autobus);
+
+        // Botón para vender boleto
         JButton btnVender = new JButton("Comprar Boleto");
         btnVender.addActionListener((ActionEvent e) -> {
             String nombre = txtNombre.getText().trim();
             String destino = String.valueOf(cmbDestino.getSelectedItem());
-            double precio = Double.parseDouble(txtPrecio.getText().trim());
+            double precio = Double.parseDouble(lblPrecioValor.getText());
             int asiento = Integer.parseInt(cmbAsientos.getSelectedItem().toString());
 
             if (autobus.venderBoleto(asiento, nombre, destino, precio)) {
                 JOptionPane.showMessageDialog(this, "Boleto comprado exitosamente.");
+                dispose(); // Cerrar ventana después de la compra
             } else {
                 JOptionPane.showMessageDialog(this, "Asiento no disponible.");
             }
         });
 
+        // Agregar componentes al formulario
         add(lblNombre);
         add(txtNombre);
         add(lblDestino);
         add(cmbDestino);
         add(lblPrecio);
-        add(txtPrecio);
-        add(new JLabel("Asiento:"));
+        add(lblPrecioValor);
+        add(lblAsiento);
         add(cmbAsientos);
+        add(new JLabel()); // Espaciador
         add(btnVender);
     }
 
@@ -67,11 +87,51 @@ public class ComprarBoletoForm extends JDialog {
             }
         }
     }
-    private void cargarTerminales(Autobus autobus){
-        List<String> terminales = autobus.getTerminales();
-        for (String t : terminales){
-            cmbDestino.addItem(t);
+
+    private void cargarTerminales(Autobus autobus) {
+        for (String terminal : autobus.getTerminales()) {
+            cmbDestino.addItem(terminal);
         }
+    }
+
+    private void actualizarPrecio() {
+        // Obtener el destino seleccionado
+        String destino = String.valueOf(cmbDestino.getSelectedItem());
+        double precio = 0;
+
+        // Asignar precios según el destino
+        switch (destino) {
+            case "Navojoa":
+                precio = 100;
+                break;
+            case "Obregón":
+                precio = 150;
+                break;
+            case "Empalme":
+                precio = 200;
+                break;
+            case "Guaymas":
+                precio = 250;
+                break;
+            case "Hermosillo":
+                precio = 300;
+                break;
+            case "Santa Ana":
+                precio = 350;
+                break;
+            case "Magdalena":
+                precio = 400;
+                break;
+            case "Imuris":
+                precio = 450;
+                break;
+            case "Nogales":
+                precio = 500;
+                break;
+        }
+
+        // Actualizar el texto de la etiqueta de precio
+        lblPrecioValor.setText(String.valueOf(precio));
     }
 }
 
