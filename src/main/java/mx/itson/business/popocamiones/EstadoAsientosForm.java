@@ -9,35 +9,63 @@ import java.awt.*;
 import mx.itson.entidades.popocamiones.Autobus;
 
 public class EstadoAsientosForm extends JDialog {
-    private JTextArea txtEstadoAsientos;
+/*
+    private JPanel panelAsientos;
 
     public EstadoAsientosForm(JFrame parent, Autobus autobus) {
-        super(parent, "Estado de Asientos", true);
-        setSize(400, 300);
+        super(parent, "Estado de Asientos - Gráfico", true);
+        setSize(500, 500);
         setLocationRelativeTo(parent);
         setLayout(new BorderLayout());
 
-        txtEstadoAsientos = new JTextArea();
-        txtEstadoAsientos.setEditable(false);
-        JScrollPane scrollPane = new JScrollPane(txtEstadoAsientos);
+        // Panel para los asientos
+        panelAsientos = new JPanel();
+        panelAsientos.setLayout(new GridLayout(4, 5, 10, 10)); // 4 filas x 5 columnas, con separación
 
+        // Crear los botones que representan los asientos
+        agregarAsientos(autobus);
+
+        // Botón de cierre
         JButton btnCerrar = new JButton("Cerrar");
         btnCerrar.addActionListener(e -> dispose());
 
-        add(scrollPane, BorderLayout.CENTER);
+        // Agregar el panel y el botón a la ventana
+        add(panelAsientos, BorderLayout.CENTER);
         add(btnCerrar, BorderLayout.SOUTH);
-
-        mostrarEstadoAsientos(autobus);
     }
 
-    private void mostrarEstadoAsientos(Autobus autobus) {
-        StringBuilder estado = new StringBuilder("Estado de los Asientos:\n");
-        for (int i = 1; i <= 20; i++) {
-            estado.append("Asiento ").append(i).append(": ");
-            estado.append(autobus.getAsientos()[i - 1] ? "Ocupado" : "Disponible").append("\n");
+    private void agregarAsientos(Autobus autobus) {
+        boolean[] asientos = autobus.getAsientos();
+        for (int i = 0; i < asientos.length; i++) {
+            JButton btnAsiento = new JButton("Asiento " + (i + 1));
+            btnAsiento.setHorizontalAlignment(SwingConstants.CENTER);
+
+            // Cambiar el color dependiendo del estado
+            if (asientos[i]) {
+                btnAsiento.setBackground(Color.RED);
+                btnAsiento.setForeground(Color.WHITE);
+                btnAsiento.setToolTipText("Ocupado");
+            } else {
+                btnAsiento.setBackground(Color.GREEN);
+                btnAsiento.setForeground(Color.BLACK);
+                btnAsiento.setToolTipText("Disponible");
+            }
+
+            btnAsiento.setEnabled(false); // Deshabilitar para que no sean clicables
+            panelAsientos.add(btnAsiento);
         }
-        txtEstadoAsientos.setText(estado.toString());
     }
+    
+    public void actualizarAsientos(Autobus autobus) {
+        panelAsientos.removeAll(); // Limpia los asientos actuales
+        agregarAsientos(autobus); // Vuelve a agregar los asientos actualizados
+        panelAsientos.revalidate();
+        panelAsientos.repaint();
+       
+    }
+
+  */  
 }
 
 
+ 

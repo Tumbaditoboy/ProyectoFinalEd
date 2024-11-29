@@ -10,12 +10,13 @@ import java.awt.event.ActionEvent;
 import mx.itson.entidades.popocamiones.Autobus;
 
 public class MoverTerminalForm extends JDialog {
-
+    /*
     private JLabel lblTerminalActual;
     private JTextArea txtReporte;
     private JButton btnSiguienteTerminal;
     private int terminalIndex = 0; // Índice de la terminal actual
     private Autobus autobus;
+    private EstadoAsientosForm ventanaAsientos; // Referencia a la ventana gráfica de asientos
 
     public MoverTerminalForm(JFrame parent, Autobus autobus) {
         super(parent, "Mover Terminal", true);
@@ -23,6 +24,10 @@ public class MoverTerminalForm extends JDialog {
         setSize(500, 400);
         setLocationRelativeTo(parent);
         setLayout(new BorderLayout());
+
+        // Crear y mostrar la ventana gráfica de los asientos
+        ventanaAsientos = new EstadoAsientosForm(parent, autobus);
+        ventanaAsientos.setVisible(true); // Mostrar la ventana gráfica desde el inicio
 
         // Etiqueta para la terminal actual
         lblTerminalActual = new JLabel("Terminal Actual: " + autobus.getTerminales().get(terminalIndex));
@@ -40,7 +45,10 @@ public class MoverTerminalForm extends JDialog {
 
         // Botón para cerrar
         JButton btnCerrar = new JButton("Cerrar");
-        btnCerrar.addActionListener((ActionEvent e) -> dispose());
+        btnCerrar.addActionListener((ActionEvent e) -> {
+            ventanaAsientos.dispose(); // Cerrar la ventana gráfica también
+            dispose();
+        });
 
         // Panel de botones
         JPanel panelBotones = new JPanel();
@@ -58,37 +66,34 @@ public class MoverTerminalForm extends JDialog {
     }
 
     private void moverASiguienteTerminal() {
-        
-    // Obtener la terminal actual
-    String terminalActual = autobus.getTerminales().get(terminalIndex);
+        // Obtener la terminal actual
+        String terminalActual = autobus.getTerminales().get(terminalIndex);
 
-    // Contar cuántos pasajeros se bajan en la terminal actual
-    long pasajerosBajados = autobus.getPasajeros().stream()
-            .filter(p -> p.getDestino().equalsIgnoreCase(terminalActual))
-            .count();
+        // Contar cuántos pasajeros se bajan en la terminal actual
+        long pasajerosBajados = autobus.getPasajeros().stream()
+                .filter(p -> p.getDestino().equalsIgnoreCase(terminalActual))
+                .count();
 
-    // Liberar asientos y eliminar pasajeros que se bajan
-    autobus.bajarPasajerosEnTerminal(terminalActual);
+        // Liberar asientos y eliminar pasajeros que se bajan
+        autobus.bajarPasajerosEnTerminal(terminalActual);
 
-    // Mostrar información en el área de texto
-    txtReporte.append("Terminal: " + terminalActual + "\n");
-    txtReporte.append("Se bajaron " + pasajerosBajados + " pasajeros.\n");
+        // Mostrar información en el área de texto
+        txtReporte.append("Terminal: " + terminalActual + "\n");
+        txtReporte.append("Se bajaron " + pasajerosBajados + " pasajeros.\n");
 
-    // Mostrar estado actualizado de pasajeros y asientos
-    actualizarReporte();
+        // Actualizar reporte y ventana gráfica de asientos
+        actualizarReporte();
+        ventanaAsientos.actualizarAsientos();
 
-    // Avanzar al siguiente índice de la terminal
-    terminalIndex++;
-    if (terminalIndex < autobus.getTerminales().size()) {
-        lblTerminalActual.setText("Terminal Actual: " + autobus.getTerminales().get(terminalIndex));
-    } else {
-        lblTerminalActual.setText("Terminal Finalizada: " + terminalActual);
-        btnSiguienteTerminal.setEnabled(false); // Deshabilitar el botón
+        // Avanzar al siguiente índice de la terminal
+        terminalIndex++;
+        if (terminalIndex < autobus.getTerminales().size()) {
+            lblTerminalActual.setText("Terminal Actual: " + autobus.getTerminales().get(terminalIndex));
+        } else {
+            lblTerminalActual.setText("Terminal Finalizada: " + terminalActual);
+            btnSiguienteTerminal.setEnabled(false); // Deshabilitar el botón
+        }
     }
-}
-    
-
-
 
     private void actualizarReporte() {
         // Mostrar el estado de los asientos y pasajeros
@@ -102,5 +107,7 @@ public class MoverTerminalForm extends JDialog {
         }
         txtReporte.append("\n");
     }
+}
+*/
 }
 

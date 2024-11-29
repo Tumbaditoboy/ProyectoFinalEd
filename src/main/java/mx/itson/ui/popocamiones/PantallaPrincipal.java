@@ -6,10 +6,12 @@ package mx.itson.ui.popocamiones;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import mx.itson.business.popocamiones.EstadoAsientosForm;
+//import mx.itson.business.popocamiones.EstadoAsientosForm;
 import mx.itson.business.popocamiones.ReporteBoletosForm;
 import mx.itson.business.popocamiones.ComprarBoletoForm;
-import mx.itson.business.popocamiones.MoverTerminalForm;
+import mx.itson.business.popocamiones.EstadosAsientosFormm;
+//import mx.itson.business.popocamiones.MoverTerminalForm;
+import mx.itson.business.popocamiones.MoverTerminalFormm;
 import mx.itson.entidades.popocamiones.Autobus;
 
 public class PantallaPrincipal extends JFrame {
@@ -54,7 +56,7 @@ public class PantallaPrincipal extends JFrame {
     }
 
     private void abrirMostrarAsientos() {
-        new EstadoAsientosForm(this, autobus).setVisible(true);
+        new EstadosAsientosFormm(this, autobus).setVisible(true);
     }
 
     private void abrirGenerarReporte() {
@@ -67,7 +69,7 @@ public class PantallaPrincipal extends JFrame {
     }
     
     private void abrirMoverTerminal() {
-    new MoverTerminalForm(this, autobus).setVisible(true);
+    new MoverTerminalFormm(autobus).setVisible(true);
 }
 }
 
