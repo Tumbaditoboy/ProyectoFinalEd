@@ -4,7 +4,6 @@
  */
 package mx.itson.business.popocamiones;
 import javax.swing.*;
-import java.util.List;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
@@ -23,20 +22,20 @@ public class ComprarBoletoForm extends JDialog {
         setLocationRelativeTo(parent);
         setLayout(new GridLayout(6, 2));
 
-        // Campo para el nombre
+        
         JLabel lblNombre = new JLabel("Nombre:");
         txtNombre = new JTextField(10);
 
-        // ComboBox para seleccionar destino
+        
         JLabel lblDestino = new JLabel("Destino:");
         cmbDestino = new JComboBox<>();
         cargarTerminales(autobus);
 
-        // Etiqueta para mostrar el precio
+       
         JLabel lblPrecio = new JLabel("Precio:");
-        lblPrecioValor = new JLabel("0"); // Valor inicial del precio
+        lblPrecioValor = new JLabel("0"); 
 
-        // Actualizar precio al cambiar destino
+        
         cmbDestino.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
@@ -46,12 +45,12 @@ public class ComprarBoletoForm extends JDialog {
             }
         });
 
-        // ComboBox para seleccionar asiento
+        
         JLabel lblAsiento = new JLabel("Asiento:");
         cmbAsientos = new JComboBox<>();
         cargarAsientosDisponibles(autobus);
 
-        // Botón para vender boleto
+        
         JButton btnVender = new JButton("Comprar Boleto");
         btnVender.addActionListener((ActionEvent e) -> {
             String nombre = txtNombre.getText().trim();
@@ -61,13 +60,13 @@ public class ComprarBoletoForm extends JDialog {
 
             if (autobus.venderBoleto(asiento, nombre, destino, precio)) {
                 JOptionPane.showMessageDialog(this, "Boleto comprado exitosamente.");
-                dispose(); // Cerrar ventana después de la compra
+                dispose(); 
             } else {
                 JOptionPane.showMessageDialog(this, "Asiento no disponible.");
             }
         });
 
-        // Agregar componentes al formulario
+        
         add(lblNombre);
         add(txtNombre);
         add(lblDestino);
@@ -76,7 +75,7 @@ public class ComprarBoletoForm extends JDialog {
         add(lblPrecioValor);
         add(lblAsiento);
         add(cmbAsientos);
-        add(new JLabel()); // Espaciador
+        add(new JLabel()); 
         add(btnVender);
     }
 
@@ -95,11 +94,11 @@ public class ComprarBoletoForm extends JDialog {
     }
 
     private void actualizarPrecio() {
-        // Obtener el destino seleccionado
+        
         String destino = String.valueOf(cmbDestino.getSelectedItem());
         double precio = 0;
 
-        // Asignar precios según el destino
+        
         switch (destino) {
             case "Navojoa":
                 precio = 100;
@@ -130,7 +129,7 @@ public class ComprarBoletoForm extends JDialog {
                 break;
         }
 
-        // Actualizar el texto de la etiqueta de precio
+        
         lblPrecioValor.setText(String.valueOf(precio));
     }
 }

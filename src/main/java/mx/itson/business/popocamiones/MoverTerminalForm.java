@@ -25,7 +25,7 @@ public class MoverTerminalForm extends JFrame {
     private JLabel lblTerminalActual;
     private JTextArea txtReporte;
     private JButton btnSiguienteTerminal, btnGenerarReporte;
-    private int terminalIndex = 0; // Índice de la terminal actual
+    private int terminalIndex = 0; 
     private Autobus autobus;
     private EstadosAsientosForm ventanaAsientos;
 
@@ -53,7 +53,7 @@ public class MoverTerminalForm extends JFrame {
         btnSiguienteTerminal.addActionListener((ActionEvent e) -> moverASiguienteTerminal());
 
         btnGenerarReporte = new JButton("Generar Reporte");
-        btnGenerarReporte.setEnabled(false); // Deshabilitado por defecto
+        btnGenerarReporte.setEnabled(false); 
         btnGenerarReporte.addActionListener((ActionEvent e) -> abrirGenerarReporte());
 
         JButton btnCerrar = new JButton("Cerrar");
@@ -95,7 +95,7 @@ public class MoverTerminalForm extends JFrame {
         } else {
             lblTerminalActual.setText("Terminal Finalizada: " + terminalActual);
             btnSiguienteTerminal.setEnabled(false);
-            btnGenerarReporte.setEnabled(true); // Habilitar el botón al llegar a Nogales
+            btnGenerarReporte.setEnabled(true); 
         }
     }
 

@@ -95,18 +95,18 @@ public class EstadosAsientosForm extends javax.swing.JFrame {
         setLocationRelativeTo(parent);
         setLayout(new BorderLayout());
 
-        // Panel para los asientos
+        
         panelAsientos = new JPanel();
-        panelAsientos.setLayout(new GridLayout(4, 5, 10, 10)); // 4 filas x 5 columnas, con separación
+        panelAsientos.setLayout(new GridLayout(4, 5, 10, 10)); 
 
-        // Crear los botones que representan los asientos
+        
         agregarAsientos(autobus);
 
-        // Botón de cierre
+        
         JButton btnCerrar = new JButton("Cerrar");
         btnCerrar.addActionListener(e -> dispose());
 
-        // Agregar el panel y el botón a la ventana
+        
         add(panelAsientos, BorderLayout.CENTER);
         add(btnCerrar, BorderLayout.SOUTH);
     }
@@ -117,7 +117,7 @@ public class EstadosAsientosForm extends javax.swing.JFrame {
             JButton btnAsiento = new JButton("Asiento " + (i + 1));
             btnAsiento.setHorizontalAlignment(SwingConstants.CENTER);
 
-            // Cambiar el color dependiendo del estado
+            
             if (asientos[i]) {
                 btnAsiento.setBackground(Color.RED);
                 btnAsiento.setForeground(Color.WHITE);
@@ -128,14 +128,14 @@ public class EstadosAsientosForm extends javax.swing.JFrame {
                 btnAsiento.setToolTipText("Disponible");
             }
 
-            btnAsiento.setEnabled(false); // Deshabilitar para que no sean clicables
+            btnAsiento.setEnabled(false); 
             panelAsientos.add(btnAsiento);
         }
     }
     
     public void actualizarAsientos(Autobus autobus) {
-        panelAsientos.removeAll(); // Limpia los asientos actuales
-        agregarAsientos(autobus); // Vuelve a agregar los asientos actualizados
+        panelAsientos.removeAll(); 
+        agregarAsientos(autobus); 
         panelAsientos.revalidate();
         panelAsientos.repaint();
        

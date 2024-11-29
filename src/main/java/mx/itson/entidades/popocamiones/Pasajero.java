@@ -10,7 +10,7 @@ public class Pasajero {
     private double precio;
     private int asiento;
 
-    // Constructor
+  
     public Pasajero(String nombre, String destino, double precio, int asiento) {
         this.nombre = nombre;
         this.destino = destino;
@@ -18,7 +18,7 @@ public class Pasajero {
         this.asiento = asiento;
     }
 
-    // Getters y Setters
+
     public String getNombre() {
         return nombre;
     }
@@ -35,7 +35,7 @@ public class Pasajero {
         return asiento;
     }
 
-    // Método para mostrar los detalles del pasajero
+   
     @Override
     public String toString() {
         return "Nombre: " + nombre + ", Destino: " + destino + ", Precio: " + precio + ", Asiento: " + asiento;

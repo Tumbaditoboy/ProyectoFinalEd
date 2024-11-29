@@ -9,17 +9,17 @@ import java.util.List;
 
 public class Autobus {
     private List<String> terminales;
-    private boolean[] asientos; // true si está ocupado, false si está disponible
+    private boolean[] asientos; 
     private List<Pasajero> pasajeros;
-    private List<Pasajero> pasajerosParaReporte; // Lista separada para el reporte final
+    private List<Pasajero> pasajerosParaReporte; 
 
     public Autobus() {
         this.terminales = new ArrayList<>();
-        this.asientos = new boolean[20]; // 20 asientos (0-19)
+        this.asientos = new boolean[20]; 
         this.pasajeros = new ArrayList<>();
-        this.pasajerosParaReporte = new ArrayList<>(); // Inicializar la lista de reporte
+        this.pasajerosParaReporte = new ArrayList<>(); 
 
-        // Inicializando las terminales (orden de paradas)
+       
         terminales.add("Navojoa");
         terminales.add("Obregón");
         terminales.add("Empalme");
@@ -50,27 +50,27 @@ public class Autobus {
     public boolean venderBoleto(int asiento, String nombre, String destino, double precio) {
         if (asiento < 1 || asiento > 20 || asientos[asiento - 1]) {
             System.out.println("El asiento seleccionado no está disponible.");
-            return false; // Si el asiento no es válido o está ocupado
+            return false; 
         }
 
-        // Crear pasajero
+       
         Pasajero pasajero = new Pasajero(nombre, destino, precio, asiento);
 
-        // Vender boleto
-        asientos[asiento - 1] = true; // Marcar asiento como ocupado
-        pasajeros.add(pasajero); // Añadir a la lista de pasajeros actuales
-        pasajerosParaReporte.add(pasajero); // Añadir a la lista de reporte final
+       
+        asientos[asiento - 1] = true; 
+        pasajeros.add(pasajero); 
+        pasajerosParaReporte.add(pasajero); 
         System.out.println("Boleto vendido con éxito.");
         return true;
     }
 
     public void bajarPasajerosEnTerminal(String terminal) {
-        // Liberar los asientos ocupados por los pasajeros que se bajan
+       
         pasajeros.stream()
                 .filter(p -> p.getDestino().equalsIgnoreCase(terminal))
-                .forEach(p -> asientos[p.getAsiento() - 1] = false); // Liberar asiento
+                .forEach(p -> asientos[p.getAsiento() - 1] = false); 
 
-        // Eliminar los pasajeros que se bajan
+       
         pasajeros.removeIf(p -> p.getDestino().equalsIgnoreCase(terminal));
     }
 }

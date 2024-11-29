@@ -14,49 +14,49 @@ public class ReporteBoletosForm extends JDialog {
     private JTable tableReporte;
     private String[] columnas = {"Nombre", "Destino", "Precio", "Asiento"};
     private Object[][] data;
-    private JLabel lblTotalGanancia; // Etiqueta para mostrar la ganancia total
+    private JLabel lblTotalGanancia; 
 
     public ReporteBoletosForm(JFrame parent, Autobus autobus) {
         super(parent, "Reporte de Boletos", true);
-        setSize(500, 400); // Ajustamos el tamaño para incluir la etiqueta
+        setSize(500, 400); 
         setLocationRelativeTo(parent);
         setLayout(new BorderLayout());
 
-        // Cargar los datos de los boletos vendidos
+        
         cargarDatosReporte(autobus);
 
-        // Crear la tabla con los datos
+       
         tableReporte = new JTable(data, columnas);
         JScrollPane scrollPane = new JScrollPane(tableReporte);
 
-        // Calcular la ganancia total
+        
         double totalGanancia = calcularTotalGanancia(autobus);
 
-        // Etiqueta para mostrar la ganancia total
+       
         lblTotalGanancia = new JLabel("Total de Ganancias: $" + totalGanancia);
         lblTotalGanancia.setFont(new Font("Arial", Font.BOLD, 14));
         lblTotalGanancia.setHorizontalAlignment(SwingConstants.CENTER);
 
-        // Botón para cerrar el reporte
+       
         JButton btnCerrar = new JButton("Cerrar");
         btnCerrar.addActionListener(e -> dispose());
 
-        // Panel inferior para la etiqueta y el botón
+        
         JPanel panelInferior = new JPanel(new BorderLayout());
         panelInferior.add(lblTotalGanancia, BorderLayout.NORTH);
         panelInferior.add(btnCerrar, BorderLayout.SOUTH);
 
-        // Agregar componentes al formulario
+        
         add(scrollPane, BorderLayout.CENTER);
         add(panelInferior, BorderLayout.SOUTH);
     }
 
     private void cargarDatosReporte(Autobus autobus) {
-        // Usamos la lista de reporte final
+     
         int fila = autobus.getPasajerosParaReporte().size();
         data = new Object[fila][4];
 
-        // Llenamos la tabla con los datos de los pasajeros del reporte final
+        
         for (int i = 0; i < fila; i++) {
             Pasajero pasajero = autobus.getPasajerosParaReporte().get(i);
             data[i][0] = pasajero.getNombre();
