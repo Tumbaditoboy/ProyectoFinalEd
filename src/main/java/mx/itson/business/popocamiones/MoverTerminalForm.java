@@ -4,99 +4,102 @@
  */
 package mx.itson.business.popocamiones;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.SwingConstants;
 import mx.itson.entidades.popocamiones.Autobus;
 
-public class MoverTerminalForm extends JDialog {
-    /*
+/**
+ *
+ * @author Akane
+ */
+public class MoverTerminalForm extends JFrame {
     private JLabel lblTerminalActual;
     private JTextArea txtReporte;
-    private JButton btnSiguienteTerminal;
+    private JButton btnSiguienteTerminal, btnGenerarReporte;
     private int terminalIndex = 0; // Índice de la terminal actual
     private Autobus autobus;
-    private EstadoAsientosForm ventanaAsientos; // Referencia a la ventana gráfica de asientos
+    private EstadosAsientosForm ventanaAsientos;
 
-    public MoverTerminalForm(JFrame parent, Autobus autobus) {
-        super(parent, "Mover Terminal", true);
+    public MoverTerminalForm(Autobus autobus) {
+        super("Mover Terminal");
         this.autobus = autobus;
         setSize(500, 400);
-        setLocationRelativeTo(parent);
+        setLocation(200, 100);
         setLayout(new BorderLayout());
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        // Crear y mostrar la ventana gráfica de los asientos
-        ventanaAsientos = new EstadoAsientosForm(parent, autobus);
-        ventanaAsientos.setVisible(true); // Mostrar la ventana gráfica desde el inicio
+        ventanaAsientos = new EstadosAsientosForm(null, autobus);
+        ventanaAsientos.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        ventanaAsientos.setVisible(true);
 
-        // Etiqueta para la terminal actual
         lblTerminalActual = new JLabel("Terminal Actual: " + autobus.getTerminales().get(terminalIndex));
         lblTerminalActual.setFont(new Font("Arial", Font.BOLD, 16));
         lblTerminalActual.setHorizontalAlignment(SwingConstants.CENTER);
 
-        // Área de texto para mostrar el reporte de pasajeros
         txtReporte = new JTextArea();
         txtReporte.setEditable(false);
         JScrollPane scrollPane = new JScrollPane(txtReporte);
 
-        // Botón para avanzar a la siguiente terminal
         btnSiguienteTerminal = new JButton("Siguiente Terminal");
         btnSiguienteTerminal.addActionListener((ActionEvent e) -> moverASiguienteTerminal());
 
-        // Botón para cerrar
+        btnGenerarReporte = new JButton("Generar Reporte");
+        btnGenerarReporte.setEnabled(false); // Deshabilitado por defecto
+        btnGenerarReporte.addActionListener((ActionEvent e) -> abrirGenerarReporte());
+
         JButton btnCerrar = new JButton("Cerrar");
         btnCerrar.addActionListener((ActionEvent e) -> {
-            ventanaAsientos.dispose(); // Cerrar la ventana gráfica también
+            ventanaAsientos.dispose();
             dispose();
         });
 
-        // Panel de botones
-        JPanel panelBotones = new JPanel();
-        panelBotones.setLayout(new GridLayout(1, 2, 10, 10));
+        JPanel panelBotones = new JPanel(new GridLayout(1, 3, 10, 10));
         panelBotones.add(btnSiguienteTerminal);
+        panelBotones.add(btnGenerarReporte);
         panelBotones.add(btnCerrar);
 
-        // Agregar componentes al formulario
         add(lblTerminalActual, BorderLayout.NORTH);
         add(scrollPane, BorderLayout.CENTER);
         add(panelBotones, BorderLayout.SOUTH);
 
-        // Mostrar los pasajeros iniciales
         actualizarReporte();
     }
 
     private void moverASiguienteTerminal() {
-        // Obtener la terminal actual
         String terminalActual = autobus.getTerminales().get(terminalIndex);
 
-        // Contar cuántos pasajeros se bajan en la terminal actual
         long pasajerosBajados = autobus.getPasajeros().stream()
                 .filter(p -> p.getDestino().equalsIgnoreCase(terminalActual))
                 .count();
 
-        // Liberar asientos y eliminar pasajeros que se bajan
         autobus.bajarPasajerosEnTerminal(terminalActual);
 
-        // Mostrar información en el área de texto
         txtReporte.append("Terminal: " + terminalActual + "\n");
         txtReporte.append("Se bajaron " + pasajerosBajados + " pasajeros.\n");
 
-        // Actualizar reporte y ventana gráfica de asientos
         actualizarReporte();
-        ventanaAsientos.actualizarAsientos();
+        ventanaAsientos.actualizarAsientos(autobus);
 
-        // Avanzar al siguiente índice de la terminal
         terminalIndex++;
         if (terminalIndex < autobus.getTerminales().size()) {
             lblTerminalActual.setText("Terminal Actual: " + autobus.getTerminales().get(terminalIndex));
         } else {
             lblTerminalActual.setText("Terminal Finalizada: " + terminalActual);
-            btnSiguienteTerminal.setEnabled(false); // Deshabilitar el botón
+            btnSiguienteTerminal.setEnabled(false);
+            btnGenerarReporte.setEnabled(true); // Habilitar el botón al llegar a Nogales
         }
     }
 
     private void actualizarReporte() {
-        // Mostrar el estado de los asientos y pasajeros
         txtReporte.append("--- Estado Actual ---\n");
         txtReporte.append("Pasajeros actuales: " + autobus.getPasajeros().size() + "\n");
         txtReporte.append("Asientos disponibles:\n");
@@ -107,7 +110,9 @@ public class MoverTerminalForm extends JDialog {
         }
         txtReporte.append("\n");
     }
-}
-*/
+
+    private void abrirGenerarReporte() {
+        new ReporteBoletosForm(this, autobus).setVisible(true);
+    }
 }
 
